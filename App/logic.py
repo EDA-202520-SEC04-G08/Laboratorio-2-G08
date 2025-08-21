@@ -132,10 +132,19 @@ def load_books_tags(catalog, filename):
     :returns: Tamaño del conjunto de tags de los libros
     :rtype: int
     """
-    catalog = control["model"]
-    booksfile = os.path.join(cf.data_dir, filename)
-    catalog = model.addBookTags(catalog, booksfile)
-    return model.bookTagSize(catalog)
+<<<<<<< HEAD
+    tf = os.path.join(data_dir, filename)
+    input_file = csv.DictReader(open(tf, encoding="utf-8"))
+    catalog["model"] = create_book_tag_list(catalog["model"])
+=======
+    # TODO: Mods de Est-1, Est-2 y Est-3 en el Lab 2
+    booktagfile = os.path.join(data_dir, filename)
+    input_file = csv.DictReader(open(booktagfile, encoding="utf-8"))
+    catalog = create_book_tag_list(catalog)
+>>>>>>> main
+    for booktag in input_file:
+        add_book_tag(catalog, booktag)
+    return book_tag_size(catalog)
 
 
 def first_book(catalog):
