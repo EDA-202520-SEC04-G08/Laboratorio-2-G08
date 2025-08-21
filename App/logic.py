@@ -132,10 +132,12 @@ def load_books_tags(catalog, filename):
     :returns: Tamaño del conjunto de tags de los libros
     :rtype: int
     """
-    catalog = control["model"]
-    booksfile = os.path.join(cf.data_dir, filename)
-    catalog = model.addBookTags(catalog, booksfile)
-    return model.bookTagSize(catalog)
+    tf = os.path.join(data_dir, filename)
+    input_file = csv.DictReader(open(tf, encoding="utf-8"))
+    catalog["model"] = create_book_tag_list(catalog["model"])
+    for booktag in input_file:
+        add_book_tag(catalog, booktag)
+    return book_tag_size(catalog)
 
 
 def first_book(catalog):
@@ -168,7 +170,8 @@ def add_book_tags_file(catalog, booktagsfile):
     :returns: catalog
     :rtype: dict
     """
-    catalog["book_tags"] = set.new_set()
+    bt = set.load_set(set.new_set(), booktagsfile)
+    catalog["book_tags"] = bt
     return catalog
 
 
